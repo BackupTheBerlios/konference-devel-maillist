@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Konference-devel] corrupted png icons, lib dependency and XDG desktop standard
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/konference-devel/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20corrupted%20png%20icons%2C%20lib%20dependency%20and%20XDG%20desktop%20standard&In-Reply-To=%3C200505181922.49372.ach%40mpe.mpg.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Konference-devel] corrupted png icons, lib dependency and XDG desktop standard</H1>
+    <B>Achim Bohnet</B> 
+    <A HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20corrupted%20png%20icons%2C%20lib%20dependency%20and%20XDG%20desktop%20standard&In-Reply-To=%3C200505181922.49372.ach%40mpe.mpg.de%3E"
+       TITLE="[Konference-devel] corrupted png icons, lib dependency and XDG desktop standard">ach at mpe.mpg.de
+       </A><BR>
+    <I>Wed May 18 19:22:48 CEST 2005</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000012.html">[Konference-devel] konference &lt;-&gt; konference not working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Malte,
+
+after a long time I thought it's time to try again ;)
+
+On debian sarge starting konference 0.1alpha2 and svn, KDE 3.4
+complains about corrupted png images.
+
+allee(0) ~ $ konference
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+
+allee(0) ~/kde/konference/konference-0.1~alpha2+svn $ file `find src -name \*png`
+src/hi32-app-konference.png: PNG image data, CORRUPTED,
+src/logo.png:                PNG image data, 352 x 288, 8-bit/color RGB, non-interlaced
+src/hi16-app-konference.png: PNG image data, CORRUPTED,
+allee(0) ~/kde/konference/konference-0.1~alpha2+svn $ file `find ../konference-0.1~alpha2/src -name \*png`
+../konference-0.1~alpha2/src/hi16-app-konference.png: PNG image data, CORRUPTED,
+../konference-0.1~alpha2/src/hi32-app-konference.png: PNG image data, CORRUPTED,
+../konference-0.1~alpha2/src/logo.png:                PNG image data, 352 x 288, 8-bit/color RGB, non-interlaced
+
+In debian one needs also to link explicitely against libdts.  Because
+the k-part is a shared lib I had to use the PIC version of the .a
+archives.
+
+Index: src/Makefile.am
+===================================================================
+--- src/Makefile.am     (revision 63)
++++ src/Makefile.am     (working copy)
+@@ -47,7 +47,7 @@
+ libkonferencepart_la_LIBADD = $(top_builddir)/src/video/libvideo.la \
+        $(top_builddir)/src/audio/libaudio.la $(top_builddir)/src/codecs/libcodecs.la \
+        $(top_builddir)/src/dialogs/libdlg.la $(top_builddir)/src/rtp/librtp.la $(top_builddir)/src/sip/libsip.la \
+-       -lavcodec $(LIB_KPARTS) $(LIB_KFILE)
++       -lavcodec_pic -ldts_pic $(LIB_KPARTS) $(LIB_KFILE)
+
+ # this is where the desktop file will go
+ partdesktopdir = $(kde_servicesdir)
+
+I guess this fix is pretty debian specific, but if you know how,
+it would be nice to add configure checks for it ;)
+
+Last but not least on kde-apps.org you mention konference
+needs KDE 3.2*.  This means the konference desktop file
+can be converted to an XDG compatible one, that is used by
+GNOME, KDE and other compatible XDG applications.
+(see /usr/share/applications/kde for lots of examples)
+Desktop file below puts konference in the Multimedia menu
+which is IMHO much better than Utilities.
+
+Index: src/konference.desktop
+===================================================================
+--- src/konference.desktop	(revision 63)
++++ src/konference.desktop	(working copy)
+@@ -1,35 +1,16 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+-Name=konference
+-Exec=konference %i %m -caption &quot;%c&quot;
+-Icon=konference
+ Type=Application
+-DocPath=konference/index.html
+-Comment=A KDE KPart Application
+-Comment[ca]=Una aplicaci&#243; KPart per a KDE
+-Comment[cy]=Cymhwysiad KPart KDE
+-Comment[da]=Et KDE KPart program
+-Comment[de]=Eine KDE-Komponenten-Anwendung
+-Comment[el]=&#924;&#953;&#945; &#949;&#966;&#945;&#961;&#956;&#959;&#947;&#942; KPart &#964;&#959;&#965; KDE
+-Comment[es]=Una aplicaci&#243;n KPart de KDE
+-Comment[et]=KDE KPart rakendus
+-Comment[fr]=Une application KPart pour KDE.
+-Comment[hi]=&#2319;&#2325; &#2325;&#2375;&#2337;&#2368;&#2312; &#2325;&#2375;-&#2346;&#2366;&#2352;&#2381;&#2335; &#2309;&#2344;&#2369;&#2346;&#2381;&#2352;&#2351;&#2379;&#2327;
+-Comment[hu]=KPart-alap&#250; KDE-alkalmaz&#225;s
+-Comment[is]=KDE KPart forrit
+-Comment[it]=Applicazione KPart di KDE
+-Comment[ja]=KDE KPart &#12450;&#12503;&#12522;&#12465;&#12540;&#12471;&#12519;&#12531;
+-Comment[nb]=Et KDE KPart-program
+-Comment[nl]=Een KDE KPart-toepassing
+-Comment[pl]=Aplikacja KDE
+-Comment[pt]=Uma aplica&#231;&#227;o KPart do KDE
+-Comment[pt_BR]=Um Aplicativo KPart do KDE
+-Comment[ru]=&#1055;&#1088;&#1080;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1077; KPart &#1076;&#1083;&#1103; KDE
+-Comment[sl]=Program KPart za KDE
+-Comment[sr]=KDE KPart &#1087;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;
+-Comment[<A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">sr at Latn</A>]=KDE KPart program
+-Comment[sv]=Ett KDE Kpart-program
+-Comment[ta]=&#2965;&#3014;&#2975;&#3007; &#2965;&#3014;&#2986;&#3006;&#2992;&#3021;&#2975;&#3021;  &#2986;&#2991;&#2985;&#3021;&#2986;&#3006;&#2975;&#3009; 
+-Comment[tg]=&#1041;&#1072; &#1082;&#1086;&#1088; &#1072;&#1085;&#1076;&#1086;&#1093;&#1090;&#1072;&#1085;&#1080; KPart &#1073;&#1072;&#1088;&#1086;&#1080; KDE
+-Comment[zh_CN]=&#19968;&#20010; KDE KPart &#24212;&#29992;&#31243;&#24207;
+-Terminal=0
++Exec=konference
++Icon=konference
++#DocPath=konference/index.html
++Terminal=false
++X-KDE-StartupNotify=true
++
++Name=Konference
++Name[de]=Konferenz
++
++GenericName=Video Conferencing
++GenericName[de]=Videokonferenz
++
++Categories=Qt;KDE;AudioVideo;
+Index: src/Makefile.am
+===================================================================
+--- src/Makefile.am	(revision 63)
++++ src/Makefile.am	(working copy)
+@@ -28,8 +28,7 @@
+ konference_LDADD = $(LIB_KPARTS)
+ 
+ # this is where the desktop file will go 
+-shelldesktopdir = $(kde_appsdir)/Utilities
+-shelldesktop_DATA = konference.desktop
++xdg_apps_DATA = konference.desktop
+ 
+ # this is where the shell's XML-GUI resource file goes
+ shellrcdir = $(kde_datadir)/konference
+
+Now I have to find an USB cam to try konference ;)
+
+Achim
+P.S. How about posting svn commit logs to konference-devel?
+
+P.P.S the homepage link in malte user info on kde-apps does not
+	work anymore
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">reddy at lion.austin.ibm.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000012.html">[Konference-devel] konference &lt;-&gt; konference not working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/konference-devel">More information about the Konference-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,189 @@
+From ach at mpe.mpg.de  Wed Mar 10 21:38:23 2004
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Wed, 10 Mar 2004 21:38:23 +0100
+Subject: [Konference-devel] Again: compile problem on Debian sarge
+Message-ID: <200403102138.23747.ach@mpe.mpg.de>
+
+Hi,
+any idea why endpoint.cpp does not compile:
+
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::AddVideoCapabilities(int)':
+endpoint.cpp:140: error: parse error before `(' token
+endpoint.cpp:141: error: parse error before `(' token
+endpoint.cpp:151: error: parse error before `(' token
+endpoint.cpp:152: error: parse error before `(' token
+endpoint.cpp:168: error: parse error before `(' token
+endpoint.cpp:169: error: parse error before `(' token
+endpoint.cpp:178: error: parse error before `(' token
+endpoint.cpp:179: error: parse error before `(' token
+
+Strange!
+
+endpoint.cpp:127: warning: unused variable `int max_bandwidth'
+endpoint.cpp:128: warning: unused variable `int fps'
+
+Very strange!!
+
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::AddAudioCapabilities()':
+endpoint.cpp:198: warning: unused variable `H323_G726_Capability*g72616_capa'
+endpoint.cpp: In member function `virtual BOOL
+   KonferenceEndpoint::OpenVideoChannel(H323Connection&, int, H323VideoCodec&)
+   ':
+endpoint.cpp:490: warning: unused parameter `H323Connection&connection'
+
+I looked at the code but failed to see how this can happen.
+
+Achim
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+
+From malte at stammkranich.de  Fri Mar 12 15:55:48 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Fri, 12 Mar 2004 15:55:48 +0100
+Subject: [Konference-devel] Again: compile problem on Debian sarge
+In-Reply-To: <200403102138.23747.ach@mpe.mpg.de>
+References: <200403102138.23747.ach@mpe.mpg.de>
+Message-ID: <200403120933.57897.malte@stammkranich.de>
+
+Am Mittwoch, 10. M?rz 2004 21:38 schrieb Achim Bohnet:
+> Hi,
+Hi
+> any idea why endpoint.cpp does not compile:
+>
+> endpoint.cpp: In member function `void
+>    KonferenceEndpoint::AddVideoCapabilities(int)':
+> endpoint.cpp:140: error: parse error before `(' token
+> endpoint.cpp:141: error: parse error before `(' token
+> endpoint.cpp:151: error: parse error before `(' token
+> endpoint.cpp:152: error: parse error before `(' token
+> endpoint.cpp:168: error: parse error before `(' token
+> endpoint.cpp:169: error: parse error before `(' token
+> endpoint.cpp:178: error: parse error before `(' token
+> endpoint.cpp:179: error: parse error before `(' token
+these errors are due to your openh323 not supporting h263-video.
+h263 is quite a struggle, b/c every openh323 version hase other problems with 
+it. though its considered very unstable. 
+solution: just comment out the lines the error occurs in.
+
+the other warnings can safely be ignored.
+
+Greetings
+Malte B?hme aka maldn
+
+p.s. falls noch mehr anfragen sind, k?nnen die auch ruhig auf deutsch sein :)
+
+
+From ach at mpe.mpg.de  Fri Mar 12 16:38:07 2004
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Fri, 12 Mar 2004 16:38:07 +0100
+Subject: [Konference-devel] Again: compile problem on Debian sarge
+In-Reply-To: <200403120933.57897.malte@stammkranich.de>
+References: <200403102138.23747.ach@mpe.mpg.de> <200403120933.57897.malte@stammkranich.de>
+Message-ID: <200403121638.07432.ach@mpe.mpg.de>
+
+On Friday 12 March 2004 15:55, Malte B?hme wrote:
+> Am Mittwoch, 10. M?rz 2004 21:38 schrieb Achim Bohnet:
+> > Hi,
+> Hi
+> > any idea why endpoint.cpp does not compile:
+> >
+> > endpoint.cpp: In member function `void
+> >    KonferenceEndpoint::AddVideoCapabilities(int)':
+> > endpoint.cpp:140: error: parse error before `(' token
+> > endpoint.cpp:141: error: parse error before `(' token
+> > endpoint.cpp:151: error: parse error before `(' token
+> > endpoint.cpp:152: error: parse error before `(' token
+> > endpoint.cpp:168: error: parse error before `(' token
+> > endpoint.cpp:169: error: parse error before `(' token
+> > endpoint.cpp:178: error: parse error before `(' token
+> > endpoint.cpp:179: error: parse error before `(' token
+> these errors are due to your openh323 not supporting h263-video.
+> h263 is quite a struggle, b/c every openh323 version hase other problems with 
+> it. though its considered very unstable. 
+> solution: just comment out the lines the error occurs in.
+> 
+> the other warnings can safely be ignored.
+
+Thanks that works!  But I still why this generates this error msg :(
+But I don't care right now ;)
+
+Now konference compiles and starts.  First start of konferences.
+Unfortunatly after entering my name and 'next', on the next (on last)
+page as 'finish' disabled.  Pressing 'cancel' or 'esc' does not
+exit konference.  konference outputs:
+
+      h323ep.cxx(864)   H323    Created endpoint.
+      h323ep.cxx(754)   H323    Started cleaner thread
+
+and then nothing happens.
+
+Note: the first and the last screen have the same describtion
+but on the last is no 'next' but a 'finish' bottum.  Better
+something like 'Congrats bla bla you successfully configured
+konference.  Please press 'Finish' to save settings and
+start konference'.
+
+Was it your intention that konferencepartrc:firstRun=false
+even when the first time wizard was aborted (like I had to do)?
+Shouldn't konference exit here?
+
+> 
+> Greetings
+> Malte B?hme aka maldn
+> 
+> p.s. falls noch mehr anfragen sind, k?nnen die auch ruhig auf deutsch sein :)
+
+Never noticed that we have a russian list member? ;)
+
+thanks for the patience answering my stupid compile question
+Achim
+> _______________________________________________
+> Konference-devel mailing list
+> Konference-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/konference-devel
+> 
+> 
+> 
+
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+
+From malte at stammkranich.de  Mon Mar 15 17:38:53 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Mon, 15 Mar 2004 17:38:53 +0100
+Subject: [Konference-devel] Again: compile problem on Debian sarge
+In-Reply-To: <200403121638.07432.ach@mpe.mpg.de>
+References: <200403102138.23747.ach@mpe.mpg.de> <200403120933.57897.malte@stammkranich.de> <200403121638.07432.ach@mpe.mpg.de>
+Message-ID: <200403151738.54149.malte@stammkranich.de>
+
+Hi,
+
+Am Freitag, 12. M?rz 2004 16:38 schrieb Achim Bohnet:
+> Note: the first and the last screen have the same describtion
+> but on the last is no 'next' but a 'finish' bottum. ?Better
+> something like 'Congrats bla bla you successfully configured
+> konference. ?Please press 'Finish' to save settings and
+> start konference'.
+>
+> Was it your intention that konferencepartrc:firstRun=false
+> even when the first time wizard was aborted (like I had to do)?
+> Shouldn't konference exit here?
+The wizard isnt even partly implemented.
+this is fairly simple, but i dont have the time right now...
+if anyone volunteers... ;)
+perhaps it would be better to set firstRun to false by default.
+
+Greetings
+Malte B?hme aka maldn
+
+

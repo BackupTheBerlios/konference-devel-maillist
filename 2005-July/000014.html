@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Konference-devel] Hi and what about synchronization ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/konference-devel/2005-July/index.html" >
+   <LINK REL="made" HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Hi%20and%20what%20about%20synchronization%20%3F&In-Reply-To=%3C200507041111.23233.malte.boehme%40rwth-aachen.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000013.html">
+   <LINK REL="Next"  HREF="000015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Konference-devel] Hi and what about synchronization ?</H1>
+    <B>Malte B&#246;hme</B> 
+    <A HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Hi%20and%20what%20about%20synchronization%20%3F&In-Reply-To=%3C200507041111.23233.malte.boehme%40rwth-aachen.de%3E"
+       TITLE="[Konference-devel] Hi and what about synchronization ?">malte.boehme at rwth-aachen.de
+       </A><BR>
+    <I>Mon Jul  4 11:11:23 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000013.html">[Konference-devel] Hi and what about synchronization ?
+</A></li>
+        <LI>Next message: <A HREF="000015.html">[Konference-devel] Hi and what about synchronization ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+As i said i am working on KCall now for google SoC.
+The current design is based on kphone and thus is kind of broken.
+the only good thing is the sip-stack from kphone (dissipate2).
+the problem is, that the sipstack and audio/rtp/everything is somewhat thight 
+integrated with each other.
+Our plan is to seperete the SIP-part from the others, so that we can use our 
+audio/rtp/codec stuff.
+Perhaps you would like to have a look at that sip-stack?
+its way more advanced and tested than the code used in konference.
+And in the not-so-far future kcall will eventually replace konference anyway.
+
+i think that writing a &quot;wrapper&quot; or change dissipate2 directly to be more 
+usable is a great way to learn how sip works.
+
+what do you say?
+
+regards,
+maldn
+
+Am Montag 04 Juli 2005 10:58 schrieb <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">cedric.brun at free.fr</A>:
+&gt;<i> Hi everybody, I'm starting (for educationnal purpose) a project linked with
+</I>&gt;<i> SIP, I will probably base it upon Konference, so for the moment I'm working
+</I>&gt;<i> on documenting the code and understanding it. :)
+</I>&gt;<i>
+</I>&gt;<i> I'll provide patches about that ;)
+</I>&gt;<i>
+</I>&gt;<i> I also have a question, how the synchronization between sound and video is
+</I>&gt;<i> handled in konference ?
+</I>&gt;<i> Can anybody point me on the source code please ?
+</I>&gt;<i>
+</I>&gt;<i> Thank you very much !
+</I>&gt;<i>
+</I>&gt;<i> C&#233;dric
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Konference-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">Konference-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/konference-devel">http://lists.berlios.de/mailman/listinfo/konference-devel</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000013.html">[Konference-devel] Hi and what about synchronization ?
+</A></li>
+	<LI>Next message: <A HREF="000015.html">[Konference-devel] Hi and what about synchronization ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/konference-devel">More information about the Konference-devel
+mailing list</a><br>
+</body></html>

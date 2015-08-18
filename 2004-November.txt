@@ -1,0 +1,87 @@
+From pschroll at telenet.be  Thu Nov 11 22:40:06 2004
+From: pschroll at telenet.be (Philippe Schroll)
+Date: Thu, 11 Nov 2004 22:40:06 +0100
+Subject: [Konference-devel] Konference 20040905 Crashing
+Message-ID: <200411112240.06919.pschroll@telenet.be>
+
+Hello,
+
+After starting konference and going through the initial setup dialog I get the 
+following error :
+
+"Unable to open the video device. An image will be transmitted during calls. 
+Note that you can always transmit a given image or the logo by choosing 
+"Image" as video device."
+
+this is followed by the Crash Handler - signal 11 (SIGSEGV)
+
+DEBUG
+Using host libthread_db library "/lib/tls/libthread_db.so.1".
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[New Thread 1120332720 (LWP 14567)]
+0xffffe410 in ?? ()
+#0  0xffffe410 in ?? ()
+#1  0xbfffeb38 in ?? ()
+#2  0x00000002 in ?? ()
+#3  0x00000000 in ?? ()
+#4  0x41f66bfe in __lll_mutex_lock_wait () from /lib/tls/libpthread.so.0
+#5  0x41f63c00 in _L_mutex_lock_33 () from /lib/tls/libpthread.so.0
+#6  0x4111aadc in __JCR_LIST__ () from /usr/lib/qt3/lib/libqt-mt.so.3
+#7  0xbfffebb0 in ?? ()
+#8  0x4111aadc in __JCR_LIST__ () from /usr/lib/qt3/lib/libqt-mt.so.3
+#9  0x08297774 in ?? ()
+#10 0xbfffebb0 in ?? ()
+#11 0xbfffeb58 in ?? ()
+#12 0x40f37cea in QRealMutexPrivate::lock ()
+   from /usr/lib/qt3/lib/libqt-mt.so.3
+
+
+when I start it from a CLI iget the following output :
+
+psch at psch-lt1:/> konference
+  0:00.847                   Konference H323    Created endpoint.
+konference: KonferenceGrabber::KonferenceGrabber()
+konference: KonferenceGrabber::updateConfig()
+konference: KonferenceGrabber::updateConfig().............done
+konference: KonferenceGrabber::startGrabbing()
+konference: KonferenceGrabber::createGrabber() : Videosize is QCIF
+konference: KonferenceGrabber::createGrabber() : Opening a regular grabber
+konference: FAIL: Failed to create the device  by name
+  0:00.854                 H323 Cleaner H323    Started cleaner thread
+konference: KonferenceGrabber::createGrabber() : Videosize is QCIF
+konference: KonferenceGrabber::createGrabber() : Opening a fake grabber
+konference: KonferenceGrabber::run() : Starting grabber...
+konference: KonferenceEndpoint::reloadConfig()
+konference: KonferenceEndpoint::AddAudioCapabilities()
+  0:06.165                   Konference H323    Added capability: 
+G.711-ALaw-64k <1>
+  0:06.172                   Konference H323    Added capability: 
+G.711-uLaw-64k <2>
+  0:06.179                   Konference H323    Added capability: H.261-QCIF 
+<3>
+  0:06.185                   Konference H323    Added capability: H.261-CIF 
+<4>
+  0:06.191                   Konference H323    Added capability: 
+UserInput/hookflash <5>
+  0:06.198                   Konference H323    Added capability: 
+UserInput/basicString <6>
+  0:06.299                   Konference H323    Added capability: 
+UserInput/dtmf <7>
+  0:06.306                   Konference H323    Added capability: 
+UserInput/RFC2833 <8>
+konference: KonferenceGrabber::stopGrabbing()
+QImage::scanLine: Index 0 out of range
+KCrash: Application 'konference' crashing...
+psch at psch-lt1:/>                                    
+
+I'm using SuSE 9.1 on KDE 3.3.1 
+
+

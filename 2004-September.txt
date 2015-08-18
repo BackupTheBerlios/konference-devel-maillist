@@ -1,0 +1,116 @@
+From malte at stammkranich.de  Sun Sep  5 20:34:32 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Sun, 5 Sep 2004 20:34:32 +0200
+Subject: [Konference-devel] testmail
+Message-ID: <200409052034.33039.malte@stammkranich.de>
+
+just a test, ignore it :)
+
+-- 
+Greetings
+Malte B?hme aka maldn
+
+--
+http://developer.berlios.de/projects/konference/
+
+
+From malte at stammkranich.de  Sun Sep  5 20:55:59 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Sun, 5 Sep 2004 20:55:59 +0200
+Subject: [Konference-devel] Re: konference kde video conferencing s/w?
+In-Reply-To: <200409051825.i85IPb806890@ns1.uma.com>
+References: <200409051825.i85IPb806890@ns1.uma.com>
+Message-ID: <200409052056.00048.malte@stammkranich.de>
+
+Am Sonntag, 5. September 2004 20:25 schrieb Joel Estes:
+> I am interested in getting konference working on Solaris.  I use KDE 3.2
+> and would like to have a video conferencing application native to it.
+> Building GnomeMeeting when using KDE makes no sense, with all the extra
+> huge bloated libraries that are required.
+right
+> It may take a while (I have older versions of pwlib and openh323 and
+> it was a pain to get it to build those on Solaris 8 with GCC 3.3.2).
+> I will let you know of any success.
+yes... those can be a pain compiling :P
+>
+> Is there a developers list for problems?
+unfortunatly i am the only developer (which is sad i think)
+but there is a list at konference-devel at lists.berlios.de but with no traffic..
+
+-- 
+Greetings
+Malte B?hme aka maldn
+
+--
+http://developer.berlios.de/projects/konference/
+
+
+From malte at stammkranich.de  Sun Sep  5 23:27:59 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Sun, 5 Sep 2004 23:27:59 +0200
+Subject: [Konference-devel] Re: Compiling Konference
+In-Reply-To: <200409052309.53099.pschroll@telenet.be>
+References: <200409040029.36848.pschroll@telenet.be> <200409040052.40132.malte@stammkranich.de> <200409052309.53099.pschroll@telenet.be>
+Message-ID: <200409052327.59809.malte@stammkranich.de>
+
+Am Sonntag, 5. September 2004 23:09 schrieb Philippe Schroll:
+> So as I mentionned , I run SuSE 9.1 with KDE 3.3
+> PWLib : version 1.6.5-8
+> openh323 : version 1.13.4-8
+> Konversation : version CVS20040903
+konversation? ;)
+
+as for pwlib and openh323 you will have to use pwlib 1.7.5 and openh323 1.14.4 
+see http://www.voxgratia.org/downloads.html#current_stable downloads.
+
+ 
+Regards
+Malte B?hme aka maldn
+
+--
+http://developer.berlios.de/projects/konference/ 
+- konference-devel at lists.berlios.de
+
+
+From malte at stammkranich.de  Mon Sep  6 01:57:47 2004
+From: malte at stammkranich.de (Malte =?iso-8859-1?q?B=F6hme?=)
+Date: Mon, 6 Sep 2004 01:57:47 +0200
+Subject: [Konference-devel] Re: konference
+In-Reply-To: <1094427759.12452.4.camel@citialin.local>
+References: <1094427759.12452.4.camel@citialin.local>
+Message-ID: <200409060157.47969.malte@stammkranich.de>
+
+Am Montag, 6. September 2004 01:42 schrieb Carl Luescher:
+> Hi Malte,
+Hi,
+
+> I am including the output from konference.  I have no special configure
+> settings for pwlib except "prefix=/usr" and "enable-plugins".  For
+> openh323, I set "prefix=/usr".  I appreciate your time, but I would like
+> konference to replace gnomemeeting, which I currently use.
+This is a known problem already fixed in the tarball provided on kde-apps.org 
+and svn.
+This was due to the fake-device (display an image instead of video) is broken, 
+but was selected by default.
+you can also try to add
+
+[video]
+videoDevice=fake
+
+to your .kde/share/config/konferencepartrc
+
+this takes the fake-device provided by pwlib as the videodevice.
+but i recommend using latest sources from svn.
+you can obtain them by using 'svn checkout svn://svn.berlios.de/konference'
+
+nevertheless thanks for trying and sending me the output!
+
+-- 
+Greetings
+Malte B?hme aka maldn
+
+--
+http://developer.berlios.de/projects/konference/
+ - konference-devel at lists.berlios.de
+
+

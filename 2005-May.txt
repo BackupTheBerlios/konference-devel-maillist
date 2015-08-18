@@ -1,0 +1,168 @@
+From ach at mpe.mpg.de  Wed May 18 19:22:48 2005
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Wed, 18 May 2005 19:22:48 +0200
+Subject: [Konference-devel] corrupted png icons, lib dependency and XDG desktop standard
+Message-ID: <200505181922.49372.ach@mpe.mpg.de>
+
+Hi Malte,
+
+after a long time I thought it's time to try again ;)
+
+On debian sarge starting konference 0.1alpha2 and svn, KDE 3.4
+complains about corrupted png images.
+
+allee(0) ~ $ konference
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+libpng error: PNG file corrupted by ASCII conversion
+
+allee(0) ~/kde/konference/konference-0.1~alpha2+svn $ file `find src -name \*png`
+src/hi32-app-konference.png: PNG image data, CORRUPTED,
+src/logo.png:                PNG image data, 352 x 288, 8-bit/color RGB, non-interlaced
+src/hi16-app-konference.png: PNG image data, CORRUPTED,
+allee(0) ~/kde/konference/konference-0.1~alpha2+svn $ file `find ../konference-0.1~alpha2/src -name \*png`
+../konference-0.1~alpha2/src/hi16-app-konference.png: PNG image data, CORRUPTED,
+../konference-0.1~alpha2/src/hi32-app-konference.png: PNG image data, CORRUPTED,
+../konference-0.1~alpha2/src/logo.png:                PNG image data, 352 x 288, 8-bit/color RGB, non-interlaced
+
+In debian one needs also to link explicitely against libdts.  Because
+the k-part is a shared lib I had to use the PIC version of the .a
+archives.
+
+Index: src/Makefile.am
+===================================================================
+--- src/Makefile.am     (revision 63)
++++ src/Makefile.am     (working copy)
+@@ -47,7 +47,7 @@
+ libkonferencepart_la_LIBADD = $(top_builddir)/src/video/libvideo.la \
+        $(top_builddir)/src/audio/libaudio.la $(top_builddir)/src/codecs/libcodecs.la \
+        $(top_builddir)/src/dialogs/libdlg.la $(top_builddir)/src/rtp/librtp.la $(top_builddir)/src/sip/libsip.la \
+-       -lavcodec $(LIB_KPARTS) $(LIB_KFILE)
++       -lavcodec_pic -ldts_pic $(LIB_KPARTS) $(LIB_KFILE)
+
+ # this is where the desktop file will go
+ partdesktopdir = $(kde_servicesdir)
+
+I guess this fix is pretty debian specific, but if you know how,
+it would be nice to add configure checks for it ;)
+
+Last but not least on kde-apps.org you mention konference
+needs KDE 3.2*.  This means the konference desktop file
+can be converted to an XDG compatible one, that is used by
+GNOME, KDE and other compatible XDG applications.
+(see /usr/share/applications/kde for lots of examples)
+Desktop file below puts konference in the Multimedia menu
+which is IMHO much better than Utilities.
+
+Index: src/konference.desktop
+===================================================================
+--- src/konference.desktop	(revision 63)
++++ src/konference.desktop	(working copy)
+@@ -1,35 +1,16 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+-Name=konference
+-Exec=konference %i %m -caption "%c"
+-Icon=konference
+ Type=Application
+-DocPath=konference/index.html
+-Comment=A KDE KPart Application
+-Comment[ca]=Una aplicaci? KPart per a KDE
+-Comment[cy]=Cymhwysiad KPart KDE
+-Comment[da]=Et KDE KPart program
+-Comment[de]=Eine KDE-Komponenten-Anwendung
+-Comment[el]=??? ???????? KPart ??? KDE
+-Comment[es]=Una aplicaci?n KPart de KDE
+-Comment[et]=KDE KPart rakendus
+-Comment[fr]=Une application KPart pour KDE.
+-Comment[hi]=?? ????? ??-????? ?????????
+-Comment[hu]=KPart-alap? KDE-alkalmaz?s
+-Comment[is]=KDE KPart forrit
+-Comment[it]=Applicazione KPart di KDE
+-Comment[ja]=KDE KPart ????????
+-Comment[nb]=Et KDE KPart-program
+-Comment[nl]=Een KDE KPart-toepassing
+-Comment[pl]=Aplikacja KDE
+-Comment[pt]=Uma aplica??o KPart do KDE
+-Comment[pt_BR]=Um Aplicativo KPart do KDE
+-Comment[ru]=?????????? KPart ??? KDE
+-Comment[sl]=Program KPart za KDE
+-Comment[sr]=KDE KPart ???????
+-Comment[sr at Latn]=KDE KPart program
+-Comment[sv]=Ett KDE Kpart-program
+-Comment[ta]=???? ????????  ???????? 
+-Comment[tg]=?? ??? ????????? KPart ????? KDE
+-Comment[zh_CN]=?? KDE KPart ????
+-Terminal=0
++Exec=konference
++Icon=konference
++#DocPath=konference/index.html
++Terminal=false
++X-KDE-StartupNotify=true
++
++Name=Konference
++Name[de]=Konferenz
++
++GenericName=Video Conferencing
++GenericName[de]=Videokonferenz
++
++Categories=Qt;KDE;AudioVideo;
+Index: src/Makefile.am
+===================================================================
+--- src/Makefile.am	(revision 63)
++++ src/Makefile.am	(working copy)
+@@ -28,8 +28,7 @@
+ konference_LDADD = $(LIB_KPARTS)
+ 
+ # this is where the desktop file will go 
+-shelldesktopdir = $(kde_appsdir)/Utilities
+-shelldesktop_DATA = konference.desktop
++xdg_apps_DATA = konference.desktop
+ 
+ # this is where the shell's XML-GUI resource file goes
+ shellrcdir = $(kde_datadir)/konference
+
+Now I have to find an USB cam to try konference ;)
+
+Achim
+P.S. How about posting svn commit logs to konference-devel?
+
+P.P.S the homepage link in malte user info on kde-apps does not
+	work anymore
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+
+From ach at mpe.mpg.de  Wed May 18 23:24:28 2005
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Wed, 18 May 2005 23:24:28 +0200
+Subject: [Konference-devel] konference <-> konference not working?
+Message-ID: <200505182324.29743.ach@mpe.mpg.de>
+
+Hi,
+I've started konference (svn) on two laptops and tried to connect to
+the each other:
+
+	sip://<ip or name of 2nd laptop>
+	sip://<ip or name of 2nd laptop>:5060
+
+SIP: Tried to call sip://xxxx:5060 but can't get destination IP address
+
+Netstat show that both konference prog listen on UDP port 5060.
+In case it matters: one laptop has no webcam, but I see the logo.
+And I get no 'moooh's so audio (arts) is fine.
+
+Any hint?
+
+Achim
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+

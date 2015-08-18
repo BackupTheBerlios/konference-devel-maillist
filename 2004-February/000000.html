@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Konference-devel] debain sarge compile problems (0.1 and cvs)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/konference-devel/2004-February/index.html" >
+   <LINK REL="made" HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20debain%20sarge%20compile%20problems%20%280.1%20and%20cvs%29&In-Reply-To=%3C200402050044.52615.ach%40mpe.mpg.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Konference-devel] debain sarge compile problems (0.1 and cvs)</H1>
+    <B>Achim Bohnet</B> 
+    <A HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20debain%20sarge%20compile%20problems%20%280.1%20and%20cvs%29&In-Reply-To=%3C200402050044.52615.ach%40mpe.mpg.de%3E"
+       TITLE="[Konference-devel] debain sarge compile problems (0.1 and cvs)">ach at mpe.mpg.de
+       </A><BR>
+    <I>Thu Feb  5 00:44:52 CET 2004</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000001.html">[Konference-devel] Re: debain sarge compile problems (0.1 and cvs)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+First a simple question? What's the difference between konference and
+videoconference?
+
+Okay now the real stuff:
+While trying to compile 0.1 tar ball or cvs checkout I got several of
+those errors (make -k ;)
+
+In file included from /usr/include/linux/videodev.h:8,
+                 from /usr/include/ptlib/unix/ptlib/videoio.h:106,
+                 from /usr/include/ptlib/video.h:89,
+                 from /usr/include/ptlib/unix/ptlib/video.h:66,
+                 from /usr/include/ptlib.h:269,
+                 from ../konference_part/konference_part.h:8,
+                 from konference.h:17,
+                 from konference.cpp:17:
+/usr/include/linux/videodev2.h:432: error: syntax error before `;' token
+/usr/include/linux/videodev2.h:500: error: 'v4l2_std_id' is used as a type, but
+   is not defined as a type.
+/usr/include/linux/videodev2.h:518: error: syntax error before `;' token
+/usr/include/linux/videodev2.h:555: error: syntax error before `;' toke
+
+
+/usr/include/linux/videodev2.h is from 2.5.999 ;) kernel.
+gcc is 3.3.2
+
+Other software installed to make configure happy: 
+
+Build-Depends:  libsdl1.2-dev (&gt;= 1.2.6),
+ libpt-dev (&gt;= 1.5.2), libopenh323-dev (&gt;=1.11.7), kdelibs4-dev (&gt;=3.2)
+
+
+Other compile problems are:
+
+
+
+In file included from /usr/include/openh323/h323.h:447,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/h323con.h:340: error: comma at end of enumerator list
+In file included from /usr/include/openh323/h323.h:449,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/gkclient.h: In copy constructor `
+   H323Gatekeeper::AlternateInfo::AlternateInfo(const
+   H323Gatekeeper::AlternateInfo&amp;)':
+/usr/include/openh323/gkclient.h:505: warning: base class `class PObject'
+   should be explicitly initialized in the copy constructor
+In file included from /usr/include/openh323/h323.h:453,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/mscodecs.h: At global scope:
+/usr/include/openh323/mscodecs.h:117: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `Clone' ignored
+/usr/include/openh323/mscodecs.h:118: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `GetFormatName' ignored
+/usr/include/openh323/mscodecs.h:119: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `CreateCodec' ignored
+/usr/include/openh323/mscodecs.h:176: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `Clone' ignored
+/usr/include/openh323/mscodecs.h:177: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `GetFormatName' ignored
+/usr/include/openh323/mscodecs.h:178: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `CreateCodec' ignored
+In file included from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h225.h:7:7: warning: &quot;H323_DISABLE_H225&quot; is not defined
+In file included from /usr/include/openh323/h225.h:18,
+                 from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h235.h:7:7: warning: &quot;H323_DISABLE_H235&quot; is not defined
+In file included from /usr/include/openh323/h225.h:19,
+                 from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h245.h:7:7: warning: &quot;H323_DISABLE_H245&quot; is not defined
+In file included from /usr/include/openh323/h323pdu.h:248,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h245.h:7:7: warning: &quot;H323_DISABLE_H245&quot; is not defined
+connection.cpp: In member function `virtual H323Connection::AnswerCallResponse
+   KonferenceConnection::OnAnswerCall(const PString&amp;, const H323SignalPDU&amp;,
+   H323SignalPDU&amp;)':
+connection.cpp:45: error: ambiguous overload for 'operator&lt;&lt;' in '
+   (&amp;kndDebug(int)())-&gt;kndbgstream::operator&lt;&lt;(const
+   char*)(&quot;KonferenceEndpoint::OnAnswerCall : Call from &quot;) &lt;&lt; caller'
+/usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&amp;
+   kndbgstream::operator&lt;&lt;(const char*)
+/usr/include/kde/kdebug.h:435: error:                 kndbgstream&amp;
+   kndbgstream::operator&lt;&lt;(const void*)
+make[5]: *** [connection.lo] Error 1
+
+
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::AddVideoCapabilities(int)':
+endpoint.cpp:118: warning: unused variable `int max_bandwidth'
+endpoint.cpp:119: warning: unused variable `int fps'
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::SetCurrentCallToken(PString)':
+endpoint.cpp:269: error: ambiguous overload for 'operator&lt;&lt;' in '
+   (&amp;kndDebug(int)())-&gt;kndbgstream::operator&lt;&lt;(const
+   char*)(&quot;KonferenceEndpoint::SetCurrentCallToken : Setting
+   _current_call_token to &quot;) &lt;&lt; newToken'
+/usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&amp;
+   kndbgstream::operator&lt;&lt;(const char*)
+/usr/include/kde/kdebug.h:435: error:                 kndbgstream&amp;
+   kndbgstream::operator&lt;&lt;(const void*)
+endpoint.cpp: In member function `virtual BOOL
+   KonferenceEndpoint::OpenVideoChannel(H323Connection&amp;, int, H323VideoCodec&amp;)
+   ':
+endpoint.cpp:457: warning: unused parameter `H323Connection&amp;connection'
+make[5]: *** [endpoint.lo] Error 1
+
+Any hint welcome!
+
+Thx,
+Achim
+P.S. some screenshots on berlios would be nice too ;)
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">reddy at lion.austin.ibm.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000001.html">[Konference-devel] Re: debain sarge compile problems (0.1 and cvs)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/konference-devel">More information about the Konference-devel
+mailing list</a><br>
+</body></html>

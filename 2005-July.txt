@@ -1,0 +1,239 @@
+From cedric.brun at free.fr  Mon Jul  4 10:58:48 2005
+From: cedric.brun at free.fr (cedric.brun at free.fr)
+Date: Mon, 04 Jul 2005 10:58:48 +0200
+Subject: [Konference-devel] Hi and what about synchronization ?
+Message-ID: <1120467528.42c8fa480e128@imp4-q.free.fr>
+
+
+Hi everybody, I'm starting (for educationnal purpose) a project linked with SIP,
+I will probably base it upon Konference, so for the moment I'm working on
+documenting the code and understanding it. :)
+
+I'll provide patches about that ;)
+
+I also have a question, how the synchronization between sound and video is
+handled in konference ?
+Can anybody point me on the source code please ?
+
+Thank you very much !
+
+C?dric
+
+
+From malte.boehme at rwth-aachen.de  Mon Jul  4 11:11:23 2005
+From: malte.boehme at rwth-aachen.de (Malte =?iso-8859-15?q?B=F6hme?=)
+Date: Mon, 04 Jul 2005 11:11:23 +0200
+Subject: [Konference-devel] Hi and what about synchronization ?
+In-Reply-To: <1120467528.42c8fa480e128@imp4-q.free.fr>
+References: <1120467528.42c8fa480e128@imp4-q.free.fr>
+Message-ID: <200507041111.23233.malte.boehme@rwth-aachen.de>
+
+Hi,
+
+As i said i am working on KCall now for google SoC.
+The current design is based on kphone and thus is kind of broken.
+the only good thing is the sip-stack from kphone (dissipate2).
+the problem is, that the sipstack and audio/rtp/everything is somewhat thight 
+integrated with each other.
+Our plan is to seperete the SIP-part from the others, so that we can use our 
+audio/rtp/codec stuff.
+Perhaps you would like to have a look at that sip-stack?
+its way more advanced and tested than the code used in konference.
+And in the not-so-far future kcall will eventually replace konference anyway.
+
+i think that writing a "wrapper" or change dissipate2 directly to be more 
+usable is a great way to learn how sip works.
+
+what do you say?
+
+regards,
+maldn
+
+Am Montag 04 Juli 2005 10:58 schrieb cedric.brun at free.fr:
+> Hi everybody, I'm starting (for educationnal purpose) a project linked with
+> SIP, I will probably base it upon Konference, so for the moment I'm working
+> on documenting the code and understanding it. :)
+>
+> I'll provide patches about that ;)
+>
+> I also have a question, how the synchronization between sound and video is
+> handled in konference ?
+> Can anybody point me on the source code please ?
+>
+> Thank you very much !
+>
+> C?dric
+> _______________________________________________
+> Konference-devel mailing list
+> Konference-devel at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/konference-devel
+
+
+
+From cedric.brun at free.fr  Tue Jul  5 04:18:18 2005
+From: cedric.brun at free.fr (cedric.brun at free.fr)
+Date: Tue, 05 Jul 2005 04:18:18 +0200
+Subject: [Konference-devel] Hi and what about synchronization ?
+Message-ID: <1120529898.42c9edea13dd8@imp3-q.free.fr>
+
+
+Oh yeah..dissipate seems quite nice and already documented..
+Then I'll try to use it for my project, I guess bits of code from Konference
+will also come in, for example the V4L part and the Arts one..
+
+Is there any repository or website for your currently google Soc project ?
+
+I noticed that Konference displaying (Webcam widget) was a lot slower than gnome
+meeting one, have you got a clue about that by chance ?
+
+Thank you taking time to answer me ;)
+
+C?dric
+
+
+
+From malte.boehme at rwth-aachen.de  Tue Jul  5 10:39:40 2005
+From: malte.boehme at rwth-aachen.de (Malte =?iso-8859-15?q?B=F6hme?=)
+Date: Tue, 05 Jul 2005 10:39:40 +0200
+Subject: [Konference-devel] Hi and what about synchronization ?
+In-Reply-To: <1120529898.42c9edea13dd8@imp3-q.free.fr>
+References: <1120529898.42c9edea13dd8@imp3-q.free.fr>
+Message-ID: <200507051039.40515.malte.boehme@rwth-aachen.de>
+
+Am Dienstag 05 Juli 2005 04:18 schrieb cedric.brun at free.fr:
+> Oh yeah..dissipate seems quite nice and already documented..
+> Then I'll try to use it for my project, I guess bits of code from
+> Konference will also come in, for example the V4L part and the Arts one..
+What kind of project is that? Just to learn SIP?
+Like i said, the main problem will be just using dissipate since the whole 
+code coming from kphone is very interconnected.
+
+> Is there any repository or website for your currently google Soc project ?
+its in kde svn (http://websvn.kde.org/trunk/kdenonbeta/kcall/applet/)
+
+> I noticed that Konference displaying (Webcam widget) was a lot slower than
+> gnome meeting one, have you got a clue about that by chance ?
+yes, the widget is more a proof-of-concept.
+the problem is when you resize the widget the pixmap/buffer gets resized and 
+drawn on the screen again.
+so even when the data to be displayed is 352x288 you can have a pixmap with 
+1024x768 (wich eats lots of memory as you can guess :P)
+but i currently donbt have a solution. for the time beeing just use a small 
+window :)
+
+> Thank you taking time to answer me ;)
+no problem at all.
+
+
+maldn
+
+
+
+From cedric.brun at free.fr  Wed Jul  6 03:17:58 2005
+From: cedric.brun at free.fr (cedric.brun at free.fr)
+Date: Wed, 06 Jul 2005 03:17:58 +0200
+Subject: [Konference-devel] The project I have to do..
+Message-ID: <1120612678.42cb314601d3f@imp4-q.free.fr>
+
+
+In fact I have to do a project for my studies (trainning period), here is te
+subject :
+
+http://cedric.brun.free.fr/Chine/sujet de stage/8432.0.SIP-VC
+requirements_20050705.pdf
+(look, there is a screenshot of what I should do.)
+
+I have to do the client part, ie : a client allowing rooms and multi users.
+
+Do you think that doing a Kpart for a given peer would be a good idea ? Then the
+right side of the main window would be a collection of Kpart. Won't this be too
+heavy ?
+
+C?dric
+
+
+From cedric.brun at free.fr  Thu Jul  7 10:07:50 2005
+From: cedric.brun at free.fr (cedric.brun at free.fr)
+Date: Thu, 07 Jul 2005 10:07:50 +0200
+Subject: [Konference-devel] Another question (sorry ^^) about the grabbing part..
+Message-ID: <1120723670.42cce2d69bbb1@imp5-q.free.fr>
+
+Hello,
+I'm looking in the grabbing code found in ./video/
+If I've well understood, the WebcamBase is an abstract class, and then the Image
+and the V4L ones are concretes.
+The thing I don't manage to understand is the utility of the VideoClient part,
+what is it for ? It is a buffer I guess..But is it between the V4L device and
+the webcamv4l or between the webcamv4l and the widget or the coder ? Why do we
+need that ?
+
+Thank you helping me since now :)
+
+C?dric
+
+
+From malte.boehme at rwth-aachen.de  Thu Jul  7 10:19:03 2005
+From: malte.boehme at rwth-aachen.de (Malte =?iso-8859-15?q?B=F6hme?=)
+Date: Thu, 07 Jul 2005 10:19:03 +0200
+Subject: [Konference-devel] Another question (sorry ^^) about the grabbing
+ part..
+In-Reply-To: <1120723670.42cce2d69bbb1@imp5-q.free.fr>
+References: <1120723670.42cce2d69bbb1@imp5-q.free.fr>
+Message-ID: <200507071019.03347.malte.boehme@rwth-aachen.de>
+
+Am Donnerstag 07 Juli 2005 10:07 schrieb cedric.brun at free.fr:
+> Hello,
+> I'm looking in the grabbing code found in ./video/
+> If I've well understood, the WebcamBase is an abstract class, and then the
+> Image and the V4L ones are concretes.
+right
+
+> The thing I don't manage to understand is the utility of the VideoClient
+> part, what is it for ? It is a buffer I guess..But is it between the V4L
+> device and the webcamv4l or between the webcamv4l and the widget or the
+> coder ? Why do we need that ?
+the client (that is KonferencePart) registers to the webcam.
+look at 
+m_localWebcamClient = m_webcam->RegisterClient(PIX_FMT_RGBA32, 20/*fps*/, 
+this);
+found in konference_part.cpp
+this line registers a client with the format RGB32 and 20 frames per second.
+
+in startVideo() we do this:
+m_txWebcamClient = m_webcam->RegisterClient(PIX_FMT_YUV420P, 5, this);
+ that is for the rtp-stack. it receives a YUV420P frame every 1/5 sec.
+
+have a look at the first lines of KonferencePart::customEvent() to see how the 
+frames are received and processed.
+
+
+> Thank you helping me since now :)
+no problem :)
+
+
+maldn
+
+
+
+From cedric.brun at free.fr  Tue Jul 26 10:37:34 2005
+From: cedric.brun at free.fr (=?iso-8859-1?q?C=E9dric_Brun?=)
+Date: Tue, 26 Jul 2005 10:37:34 +0200
+Subject: [Konference-devel] About OpenTAPI..
+Message-ID: <200507261037.35203.cedric.brun@free.fr>
+
+Hello ,
+my software developement is going well, right now I'm writting an MPEG4 coder. 
+Other people works with me, and will code the User Agent part. They are 
+choosing some closed source librairies, then I'm planning to add (next) 
+support to the OpenTAPI you are currently writting in order to remove this 
+nasty dependencie. As a consequence, I want my code to fit the more possible 
+to this future API.
+
+Is the API already clearly defined? Is there any doc out of the kde svn 
+repository ?  What would you advise me to do ?
+
+Thank you very much.
+
+C?dric
+
+

@@ -1,0 +1,283 @@
+From ach at mpe.mpg.de  Thu Feb  5 00:44:52 2004
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Thu, 5 Feb 2004 00:44:52 +0100
+Subject: [Konference-devel] debain sarge compile problems (0.1 and cvs)
+Message-ID: <200402050044.52615.ach@mpe.mpg.de>
+
+Hello,
+
+First a simple question? What's the difference between konference and
+videoconference?
+
+Okay now the real stuff:
+While trying to compile 0.1 tar ball or cvs checkout I got several of
+those errors (make -k ;)
+
+In file included from /usr/include/linux/videodev.h:8,
+                 from /usr/include/ptlib/unix/ptlib/videoio.h:106,
+                 from /usr/include/ptlib/video.h:89,
+                 from /usr/include/ptlib/unix/ptlib/video.h:66,
+                 from /usr/include/ptlib.h:269,
+                 from ../konference_part/konference_part.h:8,
+                 from konference.h:17,
+                 from konference.cpp:17:
+/usr/include/linux/videodev2.h:432: error: syntax error before `;' token
+/usr/include/linux/videodev2.h:500: error: 'v4l2_std_id' is used as a type, but
+   is not defined as a type.
+/usr/include/linux/videodev2.h:518: error: syntax error before `;' token
+/usr/include/linux/videodev2.h:555: error: syntax error before `;' toke
+
+
+/usr/include/linux/videodev2.h is from 2.5.999 ;) kernel.
+gcc is 3.3.2
+
+Other software installed to make configure happy: 
+
+Build-Depends:  libsdl1.2-dev (>= 1.2.6),
+ libpt-dev (>= 1.5.2), libopenh323-dev (>=1.11.7), kdelibs4-dev (>=3.2)
+
+
+Other compile problems are:
+
+
+
+In file included from /usr/include/openh323/h323.h:447,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/h323con.h:340: error: comma at end of enumerator list
+In file included from /usr/include/openh323/h323.h:449,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/gkclient.h: In copy constructor `
+   H323Gatekeeper::AlternateInfo::AlternateInfo(const
+   H323Gatekeeper::AlternateInfo&)':
+/usr/include/openh323/gkclient.h:505: warning: base class `class PObject'
+   should be explicitly initialized in the copy constructor
+In file included from /usr/include/openh323/h323.h:453,
+                 from connection.h:24,
+                 from connection.cpp:27:
+/usr/include/openh323/mscodecs.h: At global scope:
+/usr/include/openh323/mscodecs.h:117: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `Clone' ignored
+/usr/include/openh323/mscodecs.h:118: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `GetFormatName' ignored
+/usr/include/openh323/mscodecs.h:119: error: extra qualification `
+   MicrosoftGSMAudioCapability::' on member `CreateCodec' ignored
+/usr/include/openh323/mscodecs.h:176: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `Clone' ignored
+/usr/include/openh323/mscodecs.h:177: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `GetFormatName' ignored
+/usr/include/openh323/mscodecs.h:178: error: extra qualification `
+   MicrosoftIMAAudioCapability::' on member `CreateCodec' ignored
+In file included from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h225.h:7:7: warning: "H323_DISABLE_H225" is not defined
+In file included from /usr/include/openh323/h225.h:18,
+                 from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h235.h:7:7: warning: "H323_DISABLE_H235" is not defined
+In file included from /usr/include/openh323/h225.h:19,
+                 from /usr/include/openh323/h323pdu.h:247,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h245.h:7:7: warning: "H323_DISABLE_H245" is not defined
+In file included from /usr/include/openh323/h323pdu.h:248,
+                 from connection.h:25,
+                 from connection.cpp:27:
+/usr/include/openh323/h245.h:7:7: warning: "H323_DISABLE_H245" is not defined
+connection.cpp: In member function `virtual H323Connection::AnswerCallResponse
+   KonferenceConnection::OnAnswerCall(const PString&, const H323SignalPDU&,
+   H323SignalPDU&)':
+connection.cpp:45: error: ambiguous overload for 'operator<<' in '
+   (&kndDebug(int)())->kndbgstream::operator<<(const
+   char*)("KonferenceEndpoint::OnAnswerCall : Call from ") << caller'
+/usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&
+   kndbgstream::operator<<(const char*)
+/usr/include/kde/kdebug.h:435: error:                 kndbgstream&
+   kndbgstream::operator<<(const void*)
+make[5]: *** [connection.lo] Error 1
+
+
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::AddVideoCapabilities(int)':
+endpoint.cpp:118: warning: unused variable `int max_bandwidth'
+endpoint.cpp:119: warning: unused variable `int fps'
+endpoint.cpp: In member function `void
+   KonferenceEndpoint::SetCurrentCallToken(PString)':
+endpoint.cpp:269: error: ambiguous overload for 'operator<<' in '
+   (&kndDebug(int)())->kndbgstream::operator<<(const
+   char*)("KonferenceEndpoint::SetCurrentCallToken : Setting
+   _current_call_token to ") << newToken'
+/usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&
+   kndbgstream::operator<<(const char*)
+/usr/include/kde/kdebug.h:435: error:                 kndbgstream&
+   kndbgstream::operator<<(const void*)
+endpoint.cpp: In member function `virtual BOOL
+   KonferenceEndpoint::OpenVideoChannel(H323Connection&, int, H323VideoCodec&)
+   ':
+endpoint.cpp:457: warning: unused parameter `H323Connection&connection'
+make[5]: *** [endpoint.lo] Error 1
+
+Any hint welcome!
+
+Thx,
+Achim
+P.S. some screenshots on berlios would be nice too ;)
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+
+From ach at mpe.mpg.de  Wed Feb 11 12:02:55 2004
+From: ach at mpe.mpg.de (Achim Bohnet)
+Date: Wed, 11 Feb 2004 12:02:55 +0100
+Subject: [Konference-devel] Re: debain sarge compile problems (0.1 and cvs)
+In-Reply-To: <200402050044.52615.ach@mpe.mpg.de>
+References: <200402050044.52615.ach@mpe.mpg.de>
+Message-ID: <200402111202.55363.ach@mpe.mpg.de>
+
+On Thursday 05 February 2004 00:44, you wrote:
+> Hello,
+
+JFYI: I've send a bug report to debian BTS.  You can follow the thread
+at:	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=232107
+
+Achim
+> 
+> First a simple question? What's the difference between konference and
+> videoconference?
+> 
+> Okay now the real stuff:
+> While trying to compile 0.1 tar ball or cvs checkout I got several of
+> those errors (make -k ;)
+> 
+> In file included from /usr/include/linux/videodev.h:8,
+>                  from /usr/include/ptlib/unix/ptlib/videoio.h:106,
+>                  from /usr/include/ptlib/video.h:89,
+>                  from /usr/include/ptlib/unix/ptlib/video.h:66,
+>                  from /usr/include/ptlib.h:269,
+>                  from ../konference_part/konference_part.h:8,
+>                  from konference.h:17,
+>                  from konference.cpp:17:
+> /usr/include/linux/videodev2.h:432: error: syntax error before `;' token
+> /usr/include/linux/videodev2.h:500: error: 'v4l2_std_id' is used as a type, but
+>    is not defined as a type.
+> /usr/include/linux/videodev2.h:518: error: syntax error before `;' token
+> /usr/include/linux/videodev2.h:555: error: syntax error before `;' toke
+> 
+> 
+> /usr/include/linux/videodev2.h is from 2.5.999 ;) kernel.
+> gcc is 3.3.2
+> 
+> Other software installed to make configure happy: 
+> 
+> Build-Depends:  libsdl1.2-dev (>= 1.2.6),
+>  libpt-dev (>= 1.5.2), libopenh323-dev (>=1.11.7), kdelibs4-dev (>=3.2)
+> 
+> 
+> Other compile problems are:
+> 
+> 
+> 
+> In file included from /usr/include/openh323/h323.h:447,
+>                  from connection.h:24,
+>                  from connection.cpp:27:
+> /usr/include/openh323/h323con.h:340: error: comma at end of enumerator list
+> In file included from /usr/include/openh323/h323.h:449,
+>                  from connection.h:24,
+>                  from connection.cpp:27:
+> /usr/include/openh323/gkclient.h: In copy constructor `
+>    H323Gatekeeper::AlternateInfo::AlternateInfo(const
+>    H323Gatekeeper::AlternateInfo&)':
+> /usr/include/openh323/gkclient.h:505: warning: base class `class PObject'
+>    should be explicitly initialized in the copy constructor
+> In file included from /usr/include/openh323/h323.h:453,
+>                  from connection.h:24,
+>                  from connection.cpp:27:
+> /usr/include/openh323/mscodecs.h: At global scope:
+> /usr/include/openh323/mscodecs.h:117: error: extra qualification `
+>    MicrosoftGSMAudioCapability::' on member `Clone' ignored
+> /usr/include/openh323/mscodecs.h:118: error: extra qualification `
+>    MicrosoftGSMAudioCapability::' on member `GetFormatName' ignored
+> /usr/include/openh323/mscodecs.h:119: error: extra qualification `
+>    MicrosoftGSMAudioCapability::' on member `CreateCodec' ignored
+> /usr/include/openh323/mscodecs.h:176: error: extra qualification `
+>    MicrosoftIMAAudioCapability::' on member `Clone' ignored
+> /usr/include/openh323/mscodecs.h:177: error: extra qualification `
+>    MicrosoftIMAAudioCapability::' on member `GetFormatName' ignored
+> /usr/include/openh323/mscodecs.h:178: error: extra qualification `
+>    MicrosoftIMAAudioCapability::' on member `CreateCodec' ignored
+> In file included from /usr/include/openh323/h323pdu.h:247,
+>                  from connection.h:25,
+>                  from connection.cpp:27:
+> /usr/include/openh323/h225.h:7:7: warning: "H323_DISABLE_H225" is not defined
+> In file included from /usr/include/openh323/h225.h:18,
+>                  from /usr/include/openh323/h323pdu.h:247,
+>                  from connection.h:25,
+>                  from connection.cpp:27:
+> /usr/include/openh323/h235.h:7:7: warning: "H323_DISABLE_H235" is not defined
+> In file included from /usr/include/openh323/h225.h:19,
+>                  from /usr/include/openh323/h323pdu.h:247,
+>                  from connection.h:25,
+>                  from connection.cpp:27:
+> /usr/include/openh323/h245.h:7:7: warning: "H323_DISABLE_H245" is not defined
+> In file included from /usr/include/openh323/h323pdu.h:248,
+>                  from connection.h:25,
+>                  from connection.cpp:27:
+> /usr/include/openh323/h245.h:7:7: warning: "H323_DISABLE_H245" is not defined
+> connection.cpp: In member function `virtual H323Connection::AnswerCallResponse
+>    KonferenceConnection::OnAnswerCall(const PString&, const H323SignalPDU&,
+>    H323SignalPDU&)':
+> connection.cpp:45: error: ambiguous overload for 'operator<<' in '
+>    (&kndDebug(int)())->kndbgstream::operator<<(const
+>    char*)("KonferenceEndpoint::OnAnswerCall : Call from ") << caller'
+> /usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&
+>    kndbgstream::operator<<(const char*)
+> /usr/include/kde/kdebug.h:435: error:                 kndbgstream&
+>    kndbgstream::operator<<(const void*)
+> make[5]: *** [connection.lo] Error 1
+> 
+> 
+> endpoint.cpp: In member function `void
+>    KonferenceEndpoint::AddVideoCapabilities(int)':
+> endpoint.cpp:118: warning: unused variable `int max_bandwidth'
+> endpoint.cpp:119: warning: unused variable `int fps'
+> endpoint.cpp: In member function `void
+>    KonferenceEndpoint::SetCurrentCallToken(PString)':
+> endpoint.cpp:269: error: ambiguous overload for 'operator<<' in '
+>    (&kndDebug(int)())->kndbgstream::operator<<(const
+>    char*)("KonferenceEndpoint::SetCurrentCallToken : Setting
+>    _current_call_token to ") << newToken'
+> /usr/include/kde/kdebug.h:430: error: candidates are: kndbgstream&
+>    kndbgstream::operator<<(const char*)
+> /usr/include/kde/kdebug.h:435: error:                 kndbgstream&
+>    kndbgstream::operator<<(const void*)
+> endpoint.cpp: In member function `virtual BOOL
+>    KonferenceEndpoint::OpenVideoChannel(H323Connection&, int, H323VideoCodec&)
+>    ':
+> endpoint.cpp:457: warning: unused parameter `H323Connection&connection'
+> make[5]: *** [endpoint.lo] Error 1
+> 
+> Any hint welcome!
+> 
+> Thx,
+> Achim
+> P.S. some screenshots on berlios would be nice too ;)
+> -- 
+>   To me vi is Zen.  To use vi is to practice zen. Every command is
+>   a koan. Profound to the user, unintelligible to the uninitiated.
+>   You discover truth everytime you use it.
+>                                       -- reddy at lion.austin.ibm.com
+> 
+
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- reddy at lion.austin.ibm.com
+
+

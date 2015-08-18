@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Konference-devel] Again: compile problem on Debian sarge
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/konference-devel/2004-March/index.html" >
+   <LINK REL="made" HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Again%3A%20compile%20problem%20on%20Debian%20sarge&In-Reply-To=%3C200403121638.07432.ach%40mpe.mpg.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Konference-devel] Again: compile problem on Debian sarge</H1>
+    <B>Achim Bohnet</B> 
+    <A HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Again%3A%20compile%20problem%20on%20Debian%20sarge&In-Reply-To=%3C200403121638.07432.ach%40mpe.mpg.de%3E"
+       TITLE="[Konference-devel] Again: compile problem on Debian sarge">ach at mpe.mpg.de
+       </A><BR>
+    <I>Fri Mar 12 16:38:07 CET 2004</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Konference-devel] Again: compile problem on Debian sarge
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Konference-devel] Again: compile problem on Debian sarge
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 12 March 2004 15:55, Malte B&#246;hme wrote:
+&gt;<i> Am Mittwoch, 10. M&#228;rz 2004 21:38 schrieb Achim Bohnet:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> Hi
+</I>&gt;<i> &gt; any idea why endpoint.cpp does not compile:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; endpoint.cpp: In member function `void
+</I>&gt;<i> &gt;    KonferenceEndpoint::AddVideoCapabilities(int)':
+</I>&gt;<i> &gt; endpoint.cpp:140: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:141: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:151: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:152: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:168: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:169: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:178: error: parse error before `(' token
+</I>&gt;<i> &gt; endpoint.cpp:179: error: parse error before `(' token
+</I>&gt;<i> these errors are due to your openh323 not supporting h263-video.
+</I>&gt;<i> h263 is quite a struggle, b/c every openh323 version hase other problems with 
+</I>&gt;<i> it. though its considered very unstable. 
+</I>&gt;<i> solution: just comment out the lines the error occurs in.
+</I>&gt;<i> 
+</I>&gt;<i> the other warnings can safely be ignored.
+</I>
+Thanks that works!  But I still why this generates this error msg :(
+But I don't care right now ;)
+
+Now konference compiles and starts.  First start of konferences.
+Unfortunatly after entering my name and 'next', on the next (on last)
+page as 'finish' disabled.  Pressing 'cancel' or 'esc' does not
+exit konference.  konference outputs:
+
+      h323ep.cxx(864)   H323    Created endpoint.
+      h323ep.cxx(754)   H323    Started cleaner thread
+
+and then nothing happens.
+
+Note: the first and the last screen have the same describtion
+but on the last is no 'next' but a 'finish' bottum.  Better
+something like 'Congrats bla bla you successfully configured
+konference.  Please press 'Finish' to save settings and
+start konference'.
+
+Was it your intention that konferencepartrc:firstRun=false
+even when the first time wizard was aborted (like I had to do)?
+Shouldn't konference exit here?
+
+&gt;<i> 
+</I>&gt;<i> Greetings
+</I>&gt;<i> Malte B&#246;hme aka maldn
+</I>&gt;<i> 
+</I>&gt;<i> p.s. falls noch mehr anfragen sind, k&#246;nnen die auch ruhig auf deutsch sein :)
+</I>
+Never noticed that we have a russian list member? ;)
+
+thanks for the patience answering my stupid compile question
+Achim
+&gt;<i> _______________________________________________
+</I>&gt;<i> Konference-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">Konference-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="http://lists.berlios.de/mailman/listinfo/konference-devel">http://lists.berlios.de/mailman/listinfo/konference-devel</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+  To me vi is Zen.  To use vi is to practice zen. Every command is
+  a koan. Profound to the user, unintelligible to the uninitiated.
+  You discover truth everytime you use it.
+                                      -- <A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">reddy at lion.austin.ibm.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Konference-devel] Again: compile problem on Debian sarge
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Konference-devel] Again: compile problem on Debian sarge
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/konference-devel">More information about the Konference-devel
+mailing list</a><br>
+</body></html>

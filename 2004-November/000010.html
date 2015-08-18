@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Konference-devel] Konference 20040905 Crashing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/konference-devel/2004-November/index.html" >
+   <LINK REL="made" HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Konference%2020040905%20Crashing&In-Reply-To=%3C200411112240.06919.pschroll%40telenet.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Konference-devel] Konference 20040905 Crashing</H1>
+    <B>Philippe Schroll</B> 
+    <A HREF="mailto:konference-devel%40lists.berlios.de?Subject=Re%3A%20%5BKonference-devel%5D%20Konference%2020040905%20Crashing&In-Reply-To=%3C200411112240.06919.pschroll%40telenet.be%3E"
+       TITLE="[Konference-devel] Konference 20040905 Crashing">pschroll at telenet.be
+       </A><BR>
+    <I>Thu Nov 11 22:40:06 CET 2004</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+After starting konference and going through the initial setup dialog I get the 
+following error :
+
+&quot;Unable to open the video device. An image will be transmitted during calls. 
+Note that you can always transmit a given image or the logo by choosing 
+&quot;Image&quot; as video device.&quot;
+
+this is followed by the Crash Handler - signal 11 (SIGSEGV)
+
+DEBUG
+Using host libthread_db library &quot;/lib/tls/libthread_db.so.1&quot;.
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[Thread debugging using libthread_db enabled]
+[New Thread 1114488192 (LWP 14490)]
+[New Thread 1122433968 (LWP 14703)]
+[New Thread 1120332720 (LWP 14567)]
+0xffffe410 in ?? ()
+#0  0xffffe410 in ?? ()
+#1  0xbfffeb38 in ?? ()
+#2  0x00000002 in ?? ()
+#3  0x00000000 in ?? ()
+#4  0x41f66bfe in __lll_mutex_lock_wait () from /lib/tls/libpthread.so.0
+#5  0x41f63c00 in _L_mutex_lock_33 () from /lib/tls/libpthread.so.0
+#6  0x4111aadc in __JCR_LIST__ () from /usr/lib/qt3/lib/libqt-mt.so.3
+#7  0xbfffebb0 in ?? ()
+#8  0x4111aadc in __JCR_LIST__ () from /usr/lib/qt3/lib/libqt-mt.so.3
+#9  0x08297774 in ?? ()
+#10 0xbfffebb0 in ?? ()
+#11 0xbfffeb58 in ?? ()
+#12 0x40f37cea in QRealMutexPrivate::lock ()
+   from /usr/lib/qt3/lib/libqt-mt.so.3
+
+
+when I start it from a CLI iget the following output :
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">psch at psch-lt1</A>:/&gt; konference
+  0:00.847                   Konference H323    Created endpoint.
+konference: KonferenceGrabber::KonferenceGrabber()
+konference: KonferenceGrabber::updateConfig()
+konference: KonferenceGrabber::updateConfig().............done
+konference: KonferenceGrabber::startGrabbing()
+konference: KonferenceGrabber::createGrabber() : Videosize is QCIF
+konference: KonferenceGrabber::createGrabber() : Opening a regular grabber
+konference: FAIL: Failed to create the device  by name
+  0:00.854                 H323 Cleaner H323    Started cleaner thread
+konference: KonferenceGrabber::createGrabber() : Videosize is QCIF
+konference: KonferenceGrabber::createGrabber() : Opening a fake grabber
+konference: KonferenceGrabber::run() : Starting grabber...
+konference: KonferenceEndpoint::reloadConfig()
+konference: KonferenceEndpoint::AddAudioCapabilities()
+  0:06.165                   Konference H323    Added capability: 
+G.711-ALaw-64k &lt;1&gt;
+  0:06.172                   Konference H323    Added capability: 
+G.711-uLaw-64k &lt;2&gt;
+  0:06.179                   Konference H323    Added capability: H.261-QCIF 
+&lt;3&gt;
+  0:06.185                   Konference H323    Added capability: H.261-CIF 
+&lt;4&gt;
+  0:06.191                   Konference H323    Added capability: 
+UserInput/hookflash &lt;5&gt;
+  0:06.198                   Konference H323    Added capability: 
+UserInput/basicString &lt;6&gt;
+  0:06.299                   Konference H323    Added capability: 
+UserInput/dtmf &lt;7&gt;
+  0:06.306                   Konference H323    Added capability: 
+UserInput/RFC2833 &lt;8&gt;
+konference: KonferenceGrabber::stopGrabbing()
+QImage::scanLine: Index 0 out of range
+KCrash: Application 'konference' crashing...
+<A HREF="https://lists.berlios.de/mailman/listinfo/konference-devel">psch at psch-lt1</A>:/&gt;                                    
+
+I'm using SuSE 9.1 on KDE 3.3.1 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/konference-devel">More information about the Konference-devel
+mailing list</a><br>
+</body></html>
